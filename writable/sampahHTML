@@ -1,0 +1,123 @@
+<div class="carousel-container">
+  <div class="carousel">
+    <div class="carousel-card">
+      <img src="container/logoPenalaran.png" alt="Member 1" />
+      <h3>Member 1</h3>
+      <p>Role: Designer</p>
+    </div>
+    <div class="carousel-card active">
+      <img src="container/logoPenalaran.png" alt="Member 2" />
+      <h3>Member 2</h3>
+      <p>Role: Developer</p>
+    </div>
+    <div class="carousel-card right">
+      <img src="container/logoPenalaran.png" alt="Member 3" />
+      <h3>Member 3</h3>
+      <p>Role: Manager</p>
+    </div>
+    <div class="carousel-card">
+      <img src="container/logoPenalaran.png" alt="Member 4" />
+      <h3>Member 4</h3>
+      <p>Role: Tester</p>
+    </div>
+    <div class="carousel-card">
+      <img src="container/logoPenalaran.png" alt="Member 5" />
+      <h3>Member 5</h3>
+      <p>Role: Support</p>
+    </div>
+  </div>
+</div>
+
+<style>
+  .carousel-container {
+    width: 90%;
+    max-width: 800px;
+    overflow: hidden;
+    position: absolute;
+    /* Menggunakan posisi absolut */
+    top: 50%;
+    /* Berada di tengah secara vertikal */
+    left: 50%;
+    /* Berada di tengah secara horizontal */
+    transform: translate(-50%, -50%);
+    /* Menyesuaikan agar benar-benar di tengah */
+  }
+
+  .carousel {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+  }
+
+  .carousel-card {
+    flex: 0 0 40%;
+    margin: 0 10px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    padding: 20px;
+    filter: grayscale(100%);
+    opacity: 0.5;
+    transform: scale(0.8);
+    transition: all 0.5s ease;
+  }
+
+  .carousel-card.active {
+    opacity: 1;
+    transform: scale(1);
+    filter: none;
+  }
+
+  .carousel-card.left,
+  .carousel-card.right {
+    opacity: 0.7;
+    transform: scale(0.9);
+    filter: grayscale(50%);
+  }
+
+  .carousel-card img {
+    width: 100%;
+    border-radius: 50%;
+    margin-bottom: 10px;
+  }
+
+  .carousel-card h3 {
+    margin: 10px 0;
+    font-size: 1.2rem;
+  }
+</style>
+
+<script>
+  const cards = document.querySelectorAll(".carousel-card");
+  const carousel = document.querySelector(".carousel");
+  let activeIndex = 1; // Elemen aktif dimulai dari indeks ke-1
+
+  function updateCarousel() {
+    const offset = -activeIndex * 50; // Offset untuk geser elemen (berbasis persen)
+    carousel.style.transform = `translateX(${offset}%)`;
+
+    cards.forEach((card, index) => {
+      card.classList.remove("active", "left", "right");
+      if (index === activeIndex) {
+        card.classList.add("active");
+      } else if (index === (activeIndex - 1 + cards.length) % cards.length) {
+        card.classList.add("left");
+      } else if (index === (activeIndex + 1) % cards.length) {
+        card.classList.add("right");
+      }
+    });
+  }
+
+  function nextSlide() {
+    activeIndex = (activeIndex + 1) % cards.length;
+    updateCarousel();
+  }
+
+  function prevSlide() {
+    activeIndex = (activeIndex - 1 + cards.length) % cards.length;
+    updateCarousel();
+  }
+
+  updateCarousel(); // Jalankan saat halaman dimuat
+  setInterval(nextSlide, 5000); // Slide otomatis setiap 5 detik
+</script>
